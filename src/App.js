@@ -86,7 +86,7 @@ link.href = src;
     {/* {pages[1]?.Display&& <Route exact id={pages[1]?.Path} path={pages[1]?.Path} element={<Services />}  />} */}
     {pages[2]?.Display&& <Route exact id={pages[2]?.Path} path={pages[2]?.Path} element={<Cart />}  />}
     {pages[3]?.Display&& <Route exact id={pages[3]?.Path} path={pages[3]?.Path} element={<ViewCart />}  />}
-    {pages[4]?.Display&& <Route exact id={pages[4]?.Path} path={pages[4]?.Path} element={<Contact />}  />}
+    {/* {pages[4]?.Display&& <Route exact id={pages[4]?.Path} path={pages[4]?.Path} element={<Contact />}  />} */}
      {/* <Route exact id="services" path="services" element={<Services/>}  />
      <Route exact  path="products" element={<Cart  />}  />
      <Route exact path="contact" element={<Contact/>}></Route>
