@@ -1,0 +1,19 @@
+
+<div key={element.id} className=" flex w-1/4  min-w-min grow h-80 overflow-hidden  justify-around ">
+
+{element.alt_description ? <h1 className='w-64 h-80 mt-2 ml-5' key={element.id}>
+    <img className="w-72 h-64" src={element.urls.full} alt={element.alt_description} onClick={(e) => 
+    dispatch(showModel({
+        image: e.target.src,
+        value: e.target.alt,
+        price: element.likes,
+        name: element.user.name,
+        bio: element.user.bio,
+        visible: true 
+    }))
+    }/>
+    {element.alt_description ? element.alt_description.slice(0, 50) : element.alt_description
+    }
+</h1> : " "}
+</div>
+</>

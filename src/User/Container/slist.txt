@@ -1,0 +1,103 @@
+import React, { useEffect, useState } from 'react'
+import Model from './Model';
+import Simage from "../images/Simage.png"
+import { useDispatch } from 'react-redux';
+import { showModel } from '../Redux/Product/productSlice';
+import { ToastContainer, toast } from 'react-toastify';
+import { collection, addDoc } from "firebase/firestore";
+import {db} from '../db';
+import 'react-toastify/dist/ReactToastify.css';
+export const Slist = (props) => {
+    const { apii } = props
+    const APII = apii.toUpperCase()
+    const dispatch = useDispatch()
+    const api = `https://api.unsplash.com/search/photos?page=2&query=${apii}&client_id=${process.env.REACT_APP_KEY}`;
+    const img = 'https://img.freepik.com/free-psd/beauty-poster-template-with-woman_23-2148220697.jpg?w=2000'
+    const [dataa, setData] = useState([])
+    const [model, setModel] = useState([])
+    const getproduct = async () => {
+        const data = await fetch(api)
+        const response = await data.json()
+        setData(response.results)
+    }
+    useEffect(() => {
+        getproduct()
+    }, [])
+
+    const handleSubmit = async(name,price,image) => {
+        try {
+      const docRef = await addDoc(collection(db, "Cart"), {
+         Name : name,
+         Price : Number(price),
+         Image : image,
+         Quantity : Number(1)
+          },    
+     )
+      toast.success("Added To Cart")
+    } catch (e) {
+      toast.error("Unable To Add To Cart")
+    }
+    }
+
+    return (
+        <>
+<ToastContainer/>
+
+                               
+                             <div className="bg-white">
+      <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+        <h2 className="text-2xl font-bold tracking-tight text-gray-900 text-center ">BEST OF {APII}</h2>
+
+        <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+          {dataa.map((element) => {
+            const {alt_description , likes } = element
+            const {full} = element.urls
+            const price = likes * 61
+            return(
+              <>  {alt_description && likes && full ?   <div key={element.id} className="group relative">
+              <div className="min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80">
+                <img
+                  src={full}
+                  alt={price}
+                  onClick={(e) => 
+                    dispatch(showModel({
+                        image: e.target.src,
+                        value: e.target.alt,
+                        price: price,
+                        name: element.user.name,
+                        bio: element.user.bio,
+                        visible: true 
+                    }))}
+                  className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                />
+              </div>
+              <div className="mt-4 flex justify-between">
+                <div>
+                  <h3 className="text-sm text-gray-700">
+                    <a href="">
+                      <span aria-hidden="true" className="absolute inset-0" />
+                      {alt_description}
+                    </a>
+                  </h3>
+                  <p className="mt-1 text-sm text-gray-500">{likes}</p>
+                </div>
+                <p className="text-sm font-medium text-gray-900">{price}</p>
+              </div>
+            </div>
+                    :""}</> )})}
+        </div>
+      </div>
+    </div>
+               
+            
+                    <Model key={model}/>
+                
+        </>
+    )
+}
+
+
+
+
+
+ 

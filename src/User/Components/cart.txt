@@ -1,0 +1,119 @@
+import React, { useEffect, useState } from 'react'
+import { FcNext  } from "@react-icons/all-files/fc/FcNext";
+import {  FcPrevious  } from "@react-icons/all-files/fc/FcPrevious";
+import { collection, addDoc } from "firebase/firestore";
+import {db} from '../db';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useDispatch } from 'react-redux';
+export const Cart = () => {
+  const [Cartapi , setapi] = useState([])
+  const [page , setPage] = useState(1)
+  const [post , setPost] = useState("")
+const dispatch = useDispatch()
+
+
+  const Papi = async() => {
+    const api = `https://api.unsplash.com/search/photos?page=${page}&query=adidas shoes&client_id=Qd-wfNnqMjBmixcbJt-4-lQVBS-kU72r-U2Epm4HaeA`
+    const data = await fetch(api)
+    const final = await data.json()
+    setapi(final.results)
+  }
+  const style = {
+    backgroundColor:"white",
+    fontSize:"30px",
+    border: "1px solid red",
+}
+
+const handlePrevious = async() => {
+    if(page > 1){
+    setPage(page - 1)
+    }
+await Papi()
+}
+const handleNext = async() => {
+    if(page < 6){
+        setPage(page + 1)
+        }
+        else{
+            setPage(1)
+        }
+       await Papi()
+}
+  useEffect(()=>{
+    Papi()
+  },[])
+
+  const handleSubmit = async(name,price,image) => {
+            try {
+          const docRef = await addDoc(collection(db, "Cart"), {
+             Name : name,
+             Price : Number(price),
+             Image : image,
+             Quantity : Number(1)
+              },    
+         )
+          const id = docRef.id
+          toast.success("Item Added To Cart")
+        } catch (e) {
+          toast.error("Unable To Add Product To Cart")
+        }
+    }
+    const sendd = (e) => {
+      setPost(e.target.value);
+    }
+    const Searchh = async() => {
+      const api = `https://api.unsplash.com/search/photos?page=${page}&query=${post} product&client_id=Qd-wfNnqMjBmixcbJt-4-lQVBS-kU72r-U2Epm4HaeA`
+      const data = await fetch(api)
+      const final = await data.json()
+      setapi(final.results)
+    }
+    const addCrt = (name,price,image) => {
+        dispatch(addCart({
+          Name : name,
+          Price : price,
+          Image : image
+        }))
+    }
+
+  return (
+    <>
+    <ToastContainer/>
+     <div className="flex w-full justify-around ">
+        <button style={style} className=' py-3 px-3 text-white hover:bg-red-700 text-white' disabled={page<1} onClick={handlePrevious}><FcPrevious  /></button>
+        <div className='flex rounded-lg'>
+                    <h1 className='text-center p-2 bg-white border-2 px-3 text-black-400 mx-3  text-lg rounded-lg'>{page}</h1>
+                    <input type="text" className='border-2 bg-white rounded-lg ' onChange={sendd} />
+                    <button className='text-center p-2 bg-white border-2 px-3 text-black-400 text-2xl border-black hover:text-red-500 hover:border-red-500 rounded-lg mx-3' onClick={Searchh}>Search</button>
+                </div>
+        <button style={style} className=' py-3 px-3 text-white  hover:bg-sky-700 text-white' onClick={handleNext}>
+            <FcNext/>
+        </button>
+
+    </div>
+      <div className="flex">
+        <div className="flex flex-wrap w-screen h-screen justify-center">
+          {
+            Cartapi.map((e) => {
+              const { alt_description , likes , description } = e
+              const {full} = e.urls
+              return (
+              alt_description?<div style={{height: "544px"}} className="card w-72   rounded-md shadow-xl mx-3 my-10" key={full}>
+      <img src={full} alt="" className="w-72 h-80"/>
+      <h1 className="text-3xl text-center my-2"><b>{alt_description.substring(0,34)}</b></h1>
+      <p className="text-1xl text-gray-400 my-3">
+       {alt_description.substring(0,34)}
+      </p>
+      <h1 className="text-3xl text-center my-3"><b>₹{likes}.00</b></h1>
+      <button className="w-full bg-blue-500 rounded-bl-md rounded-br-md p-3 text-white " onClick={() => {
+        handleSubmit(alt_description,likes,full)
+      }}><b className="text-2xl w-full">BUY NOW</b></button>
+    </div>
+             : "" )
+            })
+          }
+        </div>
+      </div>
+    </>
+  )
+}
