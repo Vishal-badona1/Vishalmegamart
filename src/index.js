@@ -15,12 +15,12 @@ root.render(
   <BrowserRouter>
   <Auth0Provider
   //Netlify Credentials
-    // domain="dev-ncvxpuvaouhtodwv.us.auth0.com"
-    // clientId="IL1Ej4boz3KvYfLg9r7miZOYfkehdckq"
+    domain="dev-ncvxpuvaouhtodwv.us.auth0.com"
+    clientId="IL1Ej4boz3KvYfLg9r7miZOYfkehdckq"
 
     //Localhost Credentials
-    domain="dev-ncvxpuvaouhtodwv.us.auth0.com"
-    clientId="IpwJRtWYrixFVIbK8uhlOU7k5NFhmrQL"
+    // domain="dev-ncvxpuvaouhtodwv.us.auth0.com"
+    // clientId="IpwJRtWYrixFVIbK8uhlOU7k5NFhmrQL"
     redirectUri={window.location.origin}
   >
 <App />

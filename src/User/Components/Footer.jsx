@@ -3,8 +3,10 @@ import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { db } from '../db'
+import { Link } from 'react-router-dom'
 export const Footer = () => {
   const [Logo , setLogo] = useState("")
+  const [pages, setPages] = useState([])
   const fetchLogo = async() => {
     const logoref = collection(db , "Logo")
     await getDocs(logoref)
@@ -14,8 +16,18 @@ export const Footer = () => {
       setLogo(newData[0].Src)
     })
   }
+  const fetchPage = async () => {
+    const pageRef = collection(db, "Pages")
+    await getDocs(pageRef)
+      .then((snapshot) => {
+        const newData = snapshot.docs
+          .map((doc) => ({ ...doc.data(), id: doc.id }))
+        setPages(newData)
+      })
+  }
   useEffect(()=>{
     fetchLogo()
+    fetchPage()
   },[])
   return (
     <>
@@ -27,18 +39,15 @@ export const Footer = () => {
             {/* <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span> */}
         </a>
         <ul class="flex flex-wrap items-center mb-6 text-sm text-gray-500 sm:mb-0 dark:text-gray-400">
-            <li>
-                <a href="#" class="mr-4 hover:underline md:mr-6 ">About</a>
-            </li>
-            <li>
-                <a href="#" class="mr-4 hover:underline md:mr-6">Privacy Policy</a>
-            </li>
-            <li>
-                <a href="#" class="mr-4 hover:underline md:mr-6 ">Licensing</a>
-            </li>
-            <li>
-                <a href="#" class="hover:underline">Contact</a>
-            </li>
+        {pages.map((e)=>{
+          const {Display,Page,Path}=e
+          return(
+          <>{Display? <li>
+                <Link to={Path} class="mr-4 hover:underline md:mr-6">{Page}</Link>
+            </li>:""}
+            </>
+          )
+        })}        
         </ul>
     </div>
     <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
@@ -49,3 +58,6 @@ export const Footer = () => {
 </>
   )
 }
+
+
+           

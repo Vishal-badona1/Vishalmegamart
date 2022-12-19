@@ -16,6 +16,7 @@ import { Footer } from './User/Components/Footer';
 import Register from './User/Components/Register';
 import HH from './User/Components/HH';
 import Login from './User/Components/Login';
+import ItemSideBar from './User/Items/ItemSideBar';
 function App() {
   //fetch page
   const [pages ,setPages] = useState([])
@@ -87,11 +88,12 @@ link.href = src;
     {pages[2]?.Display&& <Route exact id={pages[2]?.Path} path={pages[2]?.Path} element={<Cart />}  />}
     {pages[3]?.Display&& <Route exact id={pages[3]?.Path} path={pages[3]?.Path} element={<ViewCart />}  />}
     {pages[4]?.Display&& <Route exact id={pages[4]?.Path} path={pages[4]?.Path} element={<Contact />}  />}
+    {pages[5]?.Display&& <Route exact id={pages[5]?.Path} path={pages[5]?.Path} element={<ItemSideBar />}  />}
      {/* <Route exact id="services" path="services" element={<Services/>}  />
      <Route exact  path="products" element={<Cart  />}  />
      <Route exact path="contact" element={<Contact/>}></Route>
      <Route path='cart' element={<ViewCart/>}></Route> */}
-     <Route  path='*' >
+     <Route  path='*' element={<Error/>} >
      </Route>
      <Route  path='profile' element={<Dashboard/>}></Route>
      <Route path='viewproduct' element={<PreProduct/>}></Route>
