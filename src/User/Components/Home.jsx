@@ -6,9 +6,10 @@ export const Home = () => {
 
   return (
     <>
-      <Products />
-      {/* <PreSlider/>
+      {/* <Products />
+      <PreSlider/>
       <Mainlist /> */}
+ 
     </>
   )
 }

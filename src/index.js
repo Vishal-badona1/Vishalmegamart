@@ -18,7 +18,7 @@ root.render(
     // domain="dev-ncvxpuvaouhtodwv.us.auth0.com"
     // clientId="IL1Ej4boz3KvYfLg9r7miZOYfkehdckq"
 
-    //Lpcalhost Credentials
+    //Localhost Credentials
     domain="dev-ncvxpuvaouhtodwv.us.auth0.com"
     clientId="IpwJRtWYrixFVIbK8uhlOU7k5NFhmrQL"
     redirectUri={window.location.origin}
