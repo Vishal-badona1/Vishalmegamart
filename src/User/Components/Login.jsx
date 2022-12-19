@@ -29,7 +29,7 @@ signInWithEmailAndPassword(auth,user.Email,user.Password)
     console.log(res); 
     navigate("/")
   })
-.catch((res)=>{setErrorMsg(res.message);console.log(res);})
+.catch((res)=>{setErrorMsg(res.messge);console.log(res);})
 }
 
   return (
