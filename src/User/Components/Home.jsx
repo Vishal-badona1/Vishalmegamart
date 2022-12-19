@@ -7,8 +7,8 @@ export const Home = () => {
   return (
     <>
       <Products />
-      <PreSlider/>
-      <Mainlist />
+      {/* <PreSlider/>
+      <Mainlist /> */}
     </>
   )
 }
