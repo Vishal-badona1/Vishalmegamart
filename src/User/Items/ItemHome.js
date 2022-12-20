@@ -2,6 +2,7 @@ import React,{ useEffect,useState} from 'react'
 
 const ItemHome = (props) => {
     const apii = props.api
+    const [query , setQuery] = useState("")
     const [data,setData]=useState([])
     const api = `https://api.unsplash.com/search/photos?page=2&query=${apii}&client_id=${process.env.REACT_APP_KEY}`;
     const fetchProduct = async() =>{
@@ -15,9 +16,9 @@ const ItemHome = (props) => {
     <div className="bg-white">
       <div className="mx-auto max-w-2xl py-16 px-4 sm:py-1 sm:px-6 lg:max-w-7xl lg:px-8 ">
         <h2 className="text-2xl font-bold tracking-tight text-gray-900">{apii}</h2>
-
+<input type="text" value={query} className="bg-red-500" onChange={(e)=>setQuery(e.target.value)} />
         <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-       {  data.map((e) => {
+       {  data.filter((user)=>user.alt_description.toLowerCase().includes(query)).map((e) => {
               const { alt_description ,description,likes,id } = e
               const {full} = e.urls
               return(
