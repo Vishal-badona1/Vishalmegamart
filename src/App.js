@@ -93,7 +93,7 @@ link.href = src;
      <Route exact  path="products" element={<Cart  />}  />
      <Route exact path="contact" element={<Contact/>}></Route>
      <Route path='cart' element={<ViewCart/>}></Route> */}
-     <Route  path='*' element={<Error/>} >
+     <Route  path='*'  >
      </Route>
      <Route  path='profile' element={<Dashboard/>}></Route>
      <Route path='viewproduct' element={<PreProduct/>}></Route>

@@ -47,7 +47,8 @@ const Title = data[0]
 
         <div className="mt-6 grid grid-cols-2 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
           {products.map((product) => (
-            <div key={product.id} className="group relative">
+           <div className='flex-col'>
+            <div key={product.id} className=" group relative">
               <div className="min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80">
                 <img
                   src={product.urls.regular}
@@ -55,23 +56,13 @@ const Title = data[0]
                   className="h-full w-full object-cover object-center lg:h-full lg:w-full"
                 />
               </div>
-              <div className="mt-4 flex justify-between">
-                <div>
-                  <h3 className="text-sm text-gray-700">
-                    <a onClick={()=>{setModel({ Name : product.description,
+            </div>
+                 <button className='my-3 bg-blue-500 p-3 rounded-lg text-white text-center text-lg font-bold w-full' onClick={()=>{setModel({ Name : product.description,
        Price : product.width,
        Rating : product.likes,
        Description :product.alt_description ,
-       Image : product.urls.full}); dispatch(ShowProduct())}}>
-                      <span aria-hidden="true" className="absolute inset-0" />
-                      {product.Description}
-                    </a>
-                  </h3>
-                  <p className="mt-1 text-sm text-gray-500">{product.color}</p>
-                </div>
-                <p className="text-sm font-medium text-gray-900">{product.Likes}</p>
-              </div>
-            </div>
+       Image : product.urls.full}); dispatch(ShowProduct())}}>View Product</button>
+           </div>
           ))}
         </div>
       </div>

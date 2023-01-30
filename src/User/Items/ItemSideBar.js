@@ -6,9 +6,9 @@ import ItemHome from './ItemHome';
 
 const ItemSideBar = () => {
     const [api,setapi] = useState("")
+    const [query , setQuery] = useState("")
 const set = (e)=>{
     setapi(e.target.value)
-console.log(api);
 }
 const [display , setDisplay] = useState({
     nav : "hidden",
@@ -37,24 +37,28 @@ const [display , setDisplay] = useState({
     }
   }
   return (
-   <div className='flex'>
+   <div className='flex h-[calc(100%_-_24rem)] '>
     <h1 className='absolute z-40 right-12 block sm:hidden text-gray-800 hover:text-red-500 ' onClick={toogleDisplay}><i className="fa fa-bars "></i></h1>
-<aside class={`w-64 border-2  ${display.nav} sm:block absolute sm:static z-40 bg-white h-screen`} aria-label="Sidebar" id='Navbbbar'>
+<aside class={`w-64 border-2  ${display.nav} sm:block absolute sm:static z-40 bg-white `} aria-label="Sidebar" id='Navbbbar'>
    <div class="overflow-y-auto py-4 px-3 rounded ">
       <ul class="space-y-2">
+{api &&  <li>
+       <input type="text" value={query} className="border-2 border-gray-300 text-center" placeholder={api} onChange={(e)=>setQuery(e.target.value.toLowerCase())} />
+     </li>}
 {Categ.map((e)=>{
     return(
-        <li>
+        <><li>
         <Link to="/items" class="flex items-center p-2 text-base font-normal rounded-lg  hover:bg-gray-100  " >
          <input type="button" value={e.Category} onClick={set} className="bg-white hover:bg-gray-100"/>
         </Link>
      </li>
+       </>
     )
 })}
       </ul>
    </div>
 </aside>
-{api && <ItemHome api={api} key={api}/>}
+<ItemHome api={api} key={api} search={query}/>
    </div>
   )
 }

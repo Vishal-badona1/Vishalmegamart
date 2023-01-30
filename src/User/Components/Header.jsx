@@ -55,18 +55,13 @@ export const Header = () => {
               {/* <span className="ml-3 text-xl">E-Flip</span> */}
             </a>
             <nav className="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
-              {/* {pages[0]?.Display && <Link className="mr-5 hover:text-gray-900" to={pages[0]?.Path}>{pages[0]?.Page}</Link>}
-              {pages[1]?.Display && <Link className="mr-5 hover:text-gray-900" to={pages[1]?.Path}>{pages[1]?.Page}</Link>}
-              {pages[2]?.Display && <Link to={pages[2]?.Path} className="mr-5 hover:text-gray-900">{pages[2]?.Page}</Link>}
-              {pages[3]?.Display && <Link to={pages[3]?.Path} className="mr-5 hover:text-gray-900">{pages[3]?.Page}</Link>}
-              {pages[4]?.Display && <Link to={pages[4]?.Path} className="mr-5 hover:text-gray-900">{pages[4]?.Page}</Link>} */}
                  {pages.map((e)=>{
           const {Display,Page,Path}=e
           return(
-          <>{Display? <li className='list-none'>
-                <Link to={Path} class="mr-4 hover:underline md:mr-6">{Page}</Link>
+          <div key={Math.random()}>{Display? <li className='list-none'>
+                <Link to={Path} className="mr-4 hover:underline md:mr-6">{Page}</Link>
             </li>:""}
-            </>
+            </div>
           )
         })} 
               {/* <Link to="items" className="mr-5 hover:text-gray-900">Items</Link> */}
